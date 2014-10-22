@@ -1,0 +1,63 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="marriage" default="clean-test">
+
+  <property name="classes" value="${basedir}/out/production/services"/>
+  <property name="classes-test" value="${basedir}/out/test/services"/>
+  <property name="test-results" value="${basedir}/out/test-results"/>
+
+  <target name="clean-test" depends="clean, test"/>
+
+  <target name="clean">
+    <delete dir="${classes}"/>
+    <delete dir="${classes-test}"/>
+    <delete dir="${test-results}"/>
+  </target>
+
+  <target name="compile">
+    <mkdir dir="${classes}"/>
+    <javac srcdir="src" destdir="${classes}" encoding="UTF-8" deprecation="yes" source="1.7" target="1.7"
+           debug="true" debuglevel="lines,vars,source">
+      <classpath>
+        <fileset dir="lib" includes="*.jar"/>
+        <fileset dir="lib-test" includes="*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="compile-test" depends="compile">
+    <mkdir dir="${classes-test}"/>
+    <javac srcdir="test" destdir="${classes-test}" encoding="UTF-8" deprecation="yes" source="1.6" target="1.6"
+           debug="true" debuglevel="lines,vars,source">
+      <classpath>
+        <pathelement path="${classes}"/>
+        <fileset dir="lib" includes="*.jar"/>
+        <fileset dir="lib-test" includes="*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="test" depends="compile-test">
+    <mkdir dir="${test-results}"/>
+    <junit maxmemory="512m" haltonfailure="false" failureproperty="tests-failed" fork="true" forkmode="once">
+      <batchtest todir="${test-results}">
+        <fileset dir="${classes-test}" excludes="**/Abstract*"/>
+        <formatter type="xml"/>
+      </batchtest>
+      <classpath>
+        <pathelement path="${classes-test}"/>
+        <pathelement path="${classes}"/>
+        <fileset dir="lib" includes="*.jar"/>
+        <fileset dir="lib-test" includes="*.jar"/>
+      </classpath>
+    </junit>
+    <fail if="tests-failed"/>
+  </target>
+
+  <target name="start" depends="compile">
+    <java classname="ee.marriage.MarriageRegistryServer" fork="true">
+      <classpath>
+        <pathelement path="${classes}"/>
+        <fileset dir="lib" includes="*.jar"/>
+      </classpath>
+    </java>
+  </target>
+</project>

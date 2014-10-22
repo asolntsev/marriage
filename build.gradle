@@ -1,0 +1,44 @@
+apply plugin: 'java'
+
+compileJava.options.debugOptions.debugLevel = "source,lines,vars"
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+defaultTasks 'test'
+
+sourceSets {
+  main {
+    java {srcDir 'src'}
+    resources {srcDir 'src'}
+  }
+  test {
+    java {srcDir 'test'}
+    resources {srcDir 'test'}
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'lib', include: '*.jar')
+  testCompile fileTree(dir: 'lib-test', include: '*.jar')
+}
+
+test {
+  systemProperties['file.encoding'] = 'UTF-8'
+  testLogging.showStandardStreams = true
+}
+
+task chrome(type: Test) {
+  systemProperties['browser'] = 'chrome'
+  systemProperties['webdriver.chrome.driver'] = '/usr/bin/chromedriver'
+}
+
+task(start, dependsOn: 'classes', type: JavaExec) {
+  main = 'ee.marriage.MarriageRegistryServer'
+  classpath = sourceSets.main.runtimeClasspath
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.1'
+  jarFile = './gradle-wrapper/gradle-wrapper.jar'
+  scriptFile = './gradle'
+}
