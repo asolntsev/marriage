@@ -10,22 +10,25 @@
 <body>
 <div class="container">
 
+  <div class="alert-error">${error!}</div>
+  
   <form class="form-signin" method="post">
     <table class="table">
       <thead>
         <tr>
           <th>Husband</th>
+          <th></th>
           <th>Wife</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            <input name="husbandCode" type="text" class="input-block-level" placeholder="person code" autofocus="">
+            <input name="husbandCode" value="${husband!}" type="text" class="input-block-level" placeholder="person code" autofocus="">
           </td>
           <td style="text-align: center; font-size: 26px;">+</td>
           <td>
-            <input name="wifeCode" type="text" class="input-block-level" placeholder="person code">
+            <input name="wifeCode" value="${wife!}" type="text" class="input-block-level" placeholder="person code">
           </td>
         </tr>
       </tbody>

@@ -3,11 +3,10 @@ package ee.marriage.model;
 import javax.inject.Singleton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-
-import static ee.marriage.model.Sex.Female;
-import static ee.marriage.model.Sex.Male;
 
 @Singleton
 public class MarriagesRepository {
@@ -32,12 +31,6 @@ public class MarriagesRepository {
   }
   
   public void register(Person husband, Person wife, Date registrationDate) {
-    if (husband.getSex() != Male)
-      throw new IllegalArgumentException("Husband must be a male: " + husband);
-
-    if (wife.getSex() != Female)
-      throw new IllegalArgumentException("Wife must be a female");
-    
     marriages.add(new Marriage(sequence.incrementAndGet(), husband, wife, registrationDate));
   }
 }

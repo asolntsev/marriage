@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ee.marriage.model.Sex.Female;
+import static ee.marriage.model.Sex.Male;
+
 public class Registration extends BaseServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -15,11 +18,28 @@ public class Registration extends BaseServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    Person husband = personRepository.byCode(request.getParameter("husbandCode"));
-    Person wife = personRepository.byCode(request.getParameter("wifeCode"));
-    
-    marriagesRepository.register(husband, wife);
+    String husbandCode = request.getParameter("husbandCode");
+    String wifeCode = request.getParameter("wifeCode");
+
+    try {
+      Person husband = persons.byCode(husbandCode);
+      Person wife = persons.byCode(wifeCode);
+
+      validate(husband, wife);
+      marriagesRegistry.register(husband, wife);
+    }
+    catch (ValidationError e) {
+      render("registration.ftl", response, "error", e.getMessage(), "husband", husbandCode, "wife", wifeCode);
+    }
     
     response.sendRedirect("/");
+  }
+
+  private void validate(Person husband, Person wife) {
+    if (husband.getSex() != Male)
+      throw new ValidationError("Husband must be a male: " + husband.code);
+
+    if (wife.getSex() != Female)
+      throw new ValidationError("Wife must be a female: " + wife.code);
   }
 }

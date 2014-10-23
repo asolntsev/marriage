@@ -21,10 +21,10 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 abstract class BaseServlet extends HttpServlet {
   @Inject
-  protected static PersonRepository personRepository;
+  protected static PersonRepository persons;
 
   @Inject
-  protected static MarriagesRepository marriagesRepository;
+  protected static MarriagesRepository marriagesRegistry;
 
   protected void render(String template, HttpServletResponse response, Object... parameters) throws IOException, ServletException {
     Configuration cfg = new Configuration();
