@@ -1,6 +1,7 @@
 package ee.marriage.web;
 
 import ee.marriage.model.MarriagesRepository;
+import ee.marriage.model.PersonRepository;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateException;
@@ -19,6 +20,9 @@ import java.util.Map;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 abstract class BaseServlet extends HttpServlet {
+  @Inject
+  protected static PersonRepository personRepository;
+
   @Inject
   protected static MarriagesRepository marriagesRepository;
 

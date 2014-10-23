@@ -29,8 +29,8 @@
     <tbody>
       <#list marriages as marriage>
         <tr>
-          <td>${marriage.husband}</td>
-          <td>${marriage.wife}</td>
+          <td>${marriage.husband.name}</td>
+          <td>${marriage.wife.name}</td>
           <td>${marriage.registeredAt?date}</td>
         </tr>
       </#list>

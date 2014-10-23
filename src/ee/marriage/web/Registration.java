@@ -1,5 +1,7 @@
 package ee.marriage.web;
 
+import ee.marriage.model.Person;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +15,11 @@ public class Registration extends BaseServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    marriagesRepository.register(request.getParameter("husbandCode"), request.getParameter("wifeCode"));
+    Person husband = personRepository.byCode(request.getParameter("husbandCode"));
+    Person wife = personRepository.byCode(request.getParameter("wifeCode"));
+    
+    marriagesRepository.register(husband, wife);
+    
     response.sendRedirect("/");
   }
 }

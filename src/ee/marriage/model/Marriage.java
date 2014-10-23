@@ -3,21 +3,23 @@ package ee.marriage.model;
 import java.util.Date;
 
 public class Marriage {
-  private final String husband;
-  private final String wife;
+  private final long id;
+  private final Person husband;
+  private final Person wife;
   private final Date registeredAt;
 
-  public Marriage(String husband, String wife, Date registrationDate) {
+  public Marriage(long id, Person husband, Person wife, Date registrationDate) {
+    this.id = id;
     this.husband = husband;
     this.wife = wife;
     this.registeredAt = registrationDate;
   }
 
-  public String getHusband() {
+  public Person getHusband() {
     return husband;
   }
 
-  public String getWife() {
+  public Person getWife() {
     return wife;
   }
 
