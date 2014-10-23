@@ -36,6 +36,12 @@ public class Registration extends BaseServlet {
   }
 
   private void validate(Person husband, Person wife) {
+    if (husband == null)
+      throw new ValidationError("Husband not found");
+
+    if (wife == null)
+      throw new ValidationError("Wife not found");
+
     if (husband.getSex() != Male)
       throw new ValidationError("Husband must be a male: " + husband.code);
 
