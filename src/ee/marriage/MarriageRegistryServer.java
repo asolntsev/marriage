@@ -1,6 +1,5 @@
 package ee.marriage;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import ee.marriage.web.Dashboard;
@@ -8,32 +7,38 @@ import ee.marriage.web.Registration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import static org.eclipse.jetty.servlet.ServletContextHandler.SESSIONS;
 
 public class MarriageRegistryServer {
-  static Map<String, Class<? extends HttpServlet>> mappings = new LinkedHashMap<String, Class<? extends HttpServlet>>() {{
-    put("/registration", Registration.class);
-    put("/", Dashboard.class);
-    put("/img/*", DefaultServlet.class);
-    put("/css/*", DefaultServlet.class);
-    put("/js/*", DefaultServlet.class);
-  }};
+  @Inject private Registration registration;
+  @Inject private Dashboard dashboard;
+  @Inject private DefaultServlet defaultServlet;
 
+  private void mappings() {
+    map("/registration", registration);
+    map("/", dashboard);
+    map("/img/*", defaultServlet);
+    map("/css/*", defaultServlet);
+    map("/js/*", defaultServlet);
+  }
+  
+  private ServletContextHandler context = new ServletContextHandler(SESSIONS);
   private Server jetty;
 
+  private void map(String path, HttpServlet servlet) {
+    context.addServlet(new ServletHolder(servlet), path);
+  }
+
   public void start(int port) throws Exception {
+    mappings();
+
     jetty = new Server(port);
-    ServletContextHandler context = new ServletContextHandler(SESSIONS);
     context.setResourceBase("web");
-    for (Entry<String, Class<? extends HttpServlet>> mapping : mappings.entrySet()) {
-      context.addServlet(mapping.getValue(), mapping.getKey());
-    }
     jetty.setHandler(context);
 
     addShutdownHook();
@@ -60,17 +65,8 @@ public class MarriageRegistryServer {
   }
 
   public static void main(String[] args) throws Exception {
-    Injector injector = Guice.createInjector(new MarriageModule());
+    Injector injector = Guice.createInjector();
     MarriageRegistryServer server = injector.getInstance(MarriageRegistryServer.class);
     server.start(8080);
-  }
-  
-  public static class MarriageModule extends AbstractModule {
-    @Override
-    protected void configure() {
-      for (Class<? extends HttpServlet> servletClass : mappings.values()) {
-        requestStaticInjection(servletClass);
-      }
-    }
   }
 }

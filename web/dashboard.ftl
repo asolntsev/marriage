@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Marriage registry</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="css/marriage.css" rel="stylesheet" media="screen">
@@ -28,10 +29,10 @@
     </thead>
     <tbody>
       <#list marriages as marriage>
-        <tr>
+        <tr class="marriage">
           <td>${marriage.husband.name}</td>
           <td>${marriage.wife.name}</td>
-          <td>${marriage.registeredAt?date}</td>
+          <td>${marriage.registeredAt?string["dd.MM.yyyy"]}</td>
         </tr>
       </#list>
     </tbody>

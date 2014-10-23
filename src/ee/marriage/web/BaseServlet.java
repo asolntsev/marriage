@@ -21,17 +21,17 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 abstract class BaseServlet extends HttpServlet {
   @Inject
-  protected static PersonRepository persons;
+  protected PersonRepository persons;
 
   @Inject
-  protected static MarriagesRepository marriagesRegistry;
+  protected MarriagesRepository marriagesRegistry;
 
   protected void render(String template, HttpServletResponse response, Object... parameters) throws IOException, ServletException {
     Configuration cfg = new Configuration();
     cfg.setDirectoryForTemplateLoading(new File(getServletContext().getRealPath("/")));
     cfg.setObjectWrapper(new DefaultObjectWrapper());
 
-    response.setContentType("text/html");
+    response.setContentType("text/html; charset=utf-8");
     response.setStatus(SC_OK);
 
     Writer out = new OutputStreamWriter(response.getOutputStream());

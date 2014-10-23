@@ -30,6 +30,7 @@ public class Registration extends BaseServlet {
     }
     catch (ValidationError e) {
       render("registration.ftl", response, "error", e.getMessage(), "husband", husbandCode, "wife", wifeCode);
+      return;
     }
     
     response.sendRedirect("/");
