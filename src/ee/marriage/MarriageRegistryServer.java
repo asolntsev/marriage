@@ -20,12 +20,14 @@ public class MarriageRegistryServer {
   @Inject private Registration registration;
   @Inject private Dashboard dashboard;
   @Inject private PersonSearch personSearch;
+  @Inject private ResetTestData resetTestData;
   @Inject private DefaultServlet defaultServlet;
 
   private void mappings() {
     map("/", dashboard);
     map("/registration", registration);
     map("/person/search", personSearch);
+    map("/reset", resetTestData);
     map("/img/*", defaultServlet);
     map("/css/*", defaultServlet);
     map("/js/*", defaultServlet);

@@ -33,4 +33,8 @@ public class MarriagesRepository {
   public void register(Person husband, Person wife, Date registrationDate) {
     marriages.add(new Marriage(sequence.incrementAndGet(), husband, wife, registrationDate));
   }
+
+  public void removeAll() {
+    marriages.clear();
+  }
 }
