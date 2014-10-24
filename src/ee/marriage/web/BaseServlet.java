@@ -1,5 +1,6 @@
 package ee.marriage.web;
 
+import com.google.gson.Gson;
 import ee.marriage.model.MarriagesRepository;
 import ee.marriage.model.PersonRepository;
 import freemarker.template.Configuration;
@@ -43,6 +44,13 @@ abstract class BaseServlet extends HttpServlet {
     } finally {
       out.close();
     }
+  }
+
+  protected void renderJSon(HttpServletResponse response, Object result) throws IOException, ServletException {
+    String json = new Gson().toJson(result);
+    response.setContentType("text/html; charset=utf-8");
+    response.setStatus(SC_OK);
+    response.getWriter().write(json);
   }
 
   private Map toMap(Object[] parameters) {

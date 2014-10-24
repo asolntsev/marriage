@@ -3,7 +3,9 @@ package ee.marriage;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import ee.marriage.web.Dashboard;
+import ee.marriage.web.PersonSearch;
 import ee.marriage.web.Registration;
+import ee.marriage.web.ResetTestData;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -17,11 +19,13 @@ import static org.eclipse.jetty.servlet.ServletContextHandler.SESSIONS;
 public class MarriageRegistryServer {
   @Inject private Registration registration;
   @Inject private Dashboard dashboard;
+  @Inject private PersonSearch personSearch;
   @Inject private DefaultServlet defaultServlet;
 
   private void mappings() {
-    map("/registration", registration);
     map("/", dashboard);
+    map("/registration", registration);
+    map("/person/search", personSearch);
     map("/img/*", defaultServlet);
     map("/css/*", defaultServlet);
     map("/js/*", defaultServlet);
