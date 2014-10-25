@@ -20,6 +20,20 @@ public class Person {
   }
   
   public Sex getSex() {
-    return code.startsWith("3") ? Male : Female;
+    switch (code.charAt(0)) {
+      case '3':
+      case '5':
+        return Male;
+      case '4':
+      case '6':
+        return Female;
+      default:
+        throw new IllegalArgumentException("Incorrect personal code: " + code);
+    }
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    return (obj instanceof Person) && ((Person) obj).code.equals(code);
   }
 }
