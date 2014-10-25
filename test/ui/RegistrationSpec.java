@@ -29,7 +29,7 @@ public class RegistrationSpec extends AbstractUITest {
     $(".ui-autocomplete").find(byText("Toomas Henrik Ilves")).click();
 
     $(By.name("wifeCode")).sendKeys("lambo");
-    $$(".ui-autocomplete").findBy(text("Evelin Int-Lambot")).click();
+    $$(".ui-autocomplete .ui-menu-item.ui-state-focus").findBy(text("Evelin Int-Lambot")).click();
 
     $(byText("Register")).click();
 

@@ -23,13 +23,19 @@ dependencies {
 }
 
 test {
+  include 'ee/marriage/**/*'
   systemProperties['file.encoding'] = 'UTF-8'
   testLogging.showStandardStreams = true
 }
 
-task chrome(type: Test) {
-  systemProperties['browser'] = 'chrome'
-  systemProperties['webdriver.chrome.driver'] = '/usr/bin/chromedriver'
+task ui_test_chrome(type: Test) {
+  include 'ui/**/*'
+  systemProperties['selenide.browser'] = 'chrome'
+}
+
+task ui_test_firefox(type: Test) {
+  include 'ui/**/*'
+  systemProperties['selenide.browser'] = 'firefox'
 }
 
 task(start, dependsOn: 'classes', type: JavaExec) {
