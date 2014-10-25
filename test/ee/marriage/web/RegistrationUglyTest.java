@@ -16,7 +16,10 @@ import static org.mockito.Matchers.anyVararg;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.*;
 
-public class RegistrationTest {
+/**
+ * This is an "ugly" unit-test that could appear when you are NOT using TDD: write code first, then test.
+ */
+public class RegistrationUglyTest {
   private Registration registration = spy(new Registration());
   private HttpServletRequest request = mock(HttpServletRequest.class);
   private HttpServletResponse response = mock(HttpServletResponse.class);
