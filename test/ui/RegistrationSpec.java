@@ -1,4 +1,4 @@
-package uitest;
+package ui;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -25,10 +25,10 @@ public class RegistrationSpec extends AbstractUITest {
   public void canSearchPersonsByName() {
     $(By.linkText("Register a marriage")).click();
     
-    $(By.name("husbandCode")).sendKeys("To");
+    $(By.name("husbandCode")).sendKeys("toom");
     $(".ui-autocomplete").find(byText("Toomas Henrik Ilves")).click();
 
-    $(By.name("wifeCode")).sendKeys("Evel");
+    $(By.name("wifeCode")).sendKeys("lambo");
     $$(".ui-autocomplete").findBy(text("Evelin Int-Lambot")).click();
 
     $(byText("Register")).click();

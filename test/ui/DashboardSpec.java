@@ -1,4 +1,4 @@
-package uitest;
+package ui;
 
 import org.junit.Test;
 
