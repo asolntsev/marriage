@@ -19,15 +19,17 @@ public class PersonRepository {
     return personsByCode.get(code);
   }
 
-  public Collection<Person> search(String personCodeOrName) {
+  public List<Person> search(String personCodeOrName) {
+    personCodeOrName = personCodeOrName.toLowerCase();
+    
     Set<Person> results = new LinkedHashSet<>();
     for (Person person : personsByCode.values()) {
       if (person.code.contains(personCodeOrName) ||
-          person.firstName.contains(personCodeOrName) ||
-          person.lastName.contains(personCodeOrName)) 
+          person.firstName.toLowerCase().contains(personCodeOrName) ||
+          person.lastName.toLowerCase().contains(personCodeOrName)) 
         results.add(person);
     }
-    return results;
+    return new ArrayList<>(results);
   }
   
   public void removeAll() {
