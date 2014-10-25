@@ -22,11 +22,7 @@ public class Registration extends BaseServlet {
     String wifeCode = request.getParameter("wifeCode");
 
     try {
-      Person husband = persons.byCode(husbandCode);
-      Person wife = persons.byCode(wifeCode);
-
-      validate(husband, wife);
-      marriagesRegistry.register(husband, wife);
+      register(husbandCode, wifeCode);
     }
     catch (ValidationError e) {
       render("registration.ftl", response, "error", e.getMessage(), "husband", husbandCode, "wife", wifeCode);
@@ -34,6 +30,14 @@ public class Registration extends BaseServlet {
     }
     
     response.sendRedirect("/");
+  }
+
+  void register(String husbandCode, String wifeCode) {
+    Person husband = persons.byCode(husbandCode);
+    Person wife = persons.byCode(wifeCode);
+
+    validate(husband, wife);
+    marriagesRegistry.register(husband, wife);
   }
 
   private void validate(Person husband, Person wife) {
