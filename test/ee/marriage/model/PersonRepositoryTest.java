@@ -29,7 +29,7 @@ public class PersonRepositoryTest {
         asList(new Person("37609080707", "John", "Milter")), 
         personRepository.search("Joh"));
   }
- 
+  
   @Test
   public void canSearchPersonByLastName() {
     assertEquals(

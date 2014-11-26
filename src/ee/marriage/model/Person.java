@@ -20,12 +20,10 @@ public class Person {
   }
   
   public Sex getSex() {
-    switch (code.charAt(0)) {
-      case '3':
-      case '5':
+    switch (Integer.parseInt(code.substring(0, 1)) % 2) {
+      case 1:
         return Male;
-      case '4':
-      case '6':
+      case 0:
         return Female;
       default:
         throw new IllegalArgumentException("Incorrect personal code: " + code);
