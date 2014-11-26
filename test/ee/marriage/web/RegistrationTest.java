@@ -18,6 +18,14 @@ public class RegistrationTest {
   }
 
   @Test
+  public void canRegisterMarriage() {
+    registration.register("3808080", "4808080");
+
+    verify(registration.marriagesRegistry)
+        .register(new Person("30000", "John", "Smith"), new Person("40000", "Екатерина", "Самойлова"));
+  }
+
+  @Test
   public void maleAndFemaleCanRegisterMarriage() {
     when(registration.persons.byCode("30000")).thenReturn(new Person("30000", "John", "Smith"));
     when(registration.persons.byCode("40000")).thenReturn(new Person("40000", "Екатерина", "Самойлова"));
