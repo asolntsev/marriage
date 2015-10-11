@@ -44,7 +44,7 @@ task(start, dependsOn: 'classes', type: JavaExec) {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.1'
+  gradleVersion = '2.7'
   jarFile = './gradle-wrapper/gradle-wrapper.jar'
   scriptFile = './gradle'
 }
